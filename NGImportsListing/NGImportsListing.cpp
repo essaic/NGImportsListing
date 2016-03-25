@@ -5,13 +5,23 @@
 #include "Loader.h"
 
 
+void displayModules(std::string line) {
+	char fname[_MAX_FNAME];
+	char ext[_MAX_EXT];
+	_splitpath_s(line.c_str(), NULL, 0, NULL, 0, fname, _MAX_FNAME, ext, _MAX_EXT);
+	std::cout << "File " << fname << ext << ": " << std::endl << std::endl;
+	E32Image image;
 
 
-//"C:/Users/marius/Documents/Project/N-Gage/Roms/Proper/Elder Scrolls Travels, The - Shadowkey (USA, Europe) (En,Fr,De,Es,It) (26.10.2004)/system/apps/6r51/6r51.app";
+	try {
+		loader::load(line, image);
+	}
+	catch (...) {
+		std::cout << "Error during parsing of file";
+	}
+	std::cout << line << std::endl;
+	std::cout << std::endl;
 
-bool has_suffix(const std::string& s, const std::string& suffix)
-{
-	return (s.size() >= suffix.size()) && equal(suffix.rbegin(), suffix.rend(), s.rbegin());
 }
 
 
@@ -29,22 +39,7 @@ int main(int argc, char* argv[])
 	//load every symbian exe to display all the module names
 	while (std::getline(file, line))
 	{
-		// Process str
-		char fname[_MAX_FNAME];
-		char ext[_MAX_EXT];
-		_splitpath_s(line.c_str(), NULL, 0, NULL, 0, fname, _MAX_FNAME, ext, _MAX_EXT);
-		std::cout << "File " << fname << ext << ": " << std::endl << std::endl ;
-		E32Image image;
-		
-		
-		try {
-			loader::load(line, image);
-		}
-		catch (...) {
-			std::cout << "Error during parsing of file";
-		}
-		std::cout << line << std::endl;
-		std::cout << std::endl;
+		displayModules(line);
 	}
 	
 	system("PAUSE");

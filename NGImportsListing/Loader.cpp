@@ -192,10 +192,10 @@ bool loader::parse(E32Image& image)
 	}*/
 
 	// Perform relocations
-	/*if (image.code_relocation_offset != 0)
+	if (image.code_relocation_offset != 0)
 	{
 		relocate(image, image.data.data() + image.code_relocation_offset, image.data.data() + image.code_offset, image.code_base_address);
-	}*/
+	}
 
 	// The number of exports should always be at least 1
 	/*if (image.export_count != 1)
@@ -307,11 +307,11 @@ void loader::patch_imports(E32Image& image)
 		}
 
 		// Insert module IDs
-		/*while (import_count--)
+		while (import_count--)
 		{
 			u32 id = *import | (u32)module_id << 24;
 			*import = id;
 			import++;
-		}*/
+		}
 	}
 }
